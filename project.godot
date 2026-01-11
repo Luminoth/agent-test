@@ -8,17 +8,16 @@
 
 config_version=5
 
-
-[display]
-
-window/vsync/vsync_mode=0
-
 [application]
 
 config/name="Agent Test"
 run/main_scene="res://Scenes/TestScene.tscn"
 config/features=PackedStringArray("4.5", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[display]
+
+window/vsync/vsync_mode=0
 
 [dotnet]
 

@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Scripts/GrassGenerator.cs" id="1_grass"]
+[ext_resource type="PrismMesh" path="res://Scenes/GrassBlade.tres" id="2_mesh"]
+[ext_resource type="StandardMaterial3D" path="res://Scenes/GrassMaterial.tres" id="3_material"]
+
+[node name="Grass" type="MultiMeshInstance3D"]
+script = ExtResource("1_grass")
+BladeMesh = ExtResource("2_mesh")
+BladeMaterial = ExtResource("3_material")

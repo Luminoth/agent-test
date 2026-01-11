@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" path="res://Scenes/Obstacle_RoundPillar.tscn" id="8_round"]
 [ext_resource type="PackedScene" path="res://Scenes/Obstacle_LargeBlock.tscn" id="9_block"]
 [ext_resource type="PackedScene" path="res://Scenes/Player.tscn" id="10_player"]
-[ext_resource type="Script" path="res://Scripts/GrassGenerator.cs" id="12_grass"]
+[ext_resource type="PackedScene" path="res://Scenes/Grass.tscn" id="12_grass_scene"]
 [ext_resource type="PackedScene" path="res://Scenes/Ring.tscn" id="13_ring"]
 [ext_resource type="Texture2D" path="res://icon.svg" id="11_icon"]
 
@@ -21,6 +21,12 @@ size = Vector3(100, 1, 100)
 [sub_resource type="BoxMesh" id="BoxMesh_floor"]
 size = Vector3(100, 1, 100)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_wall_ew"]
+size = Vector3(1, 20, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wall_ns"]
+size = Vector3(100, 20, 1)
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_player"]
@@ -28,15 +34,20 @@ size = Vector3(100, 1, 100)
 [sub_resource type="BoxMesh" id="BoxMesh_indicator"]
 size = Vector3(0.5, 0.5, 0.5)
 
-[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_default"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_default"]
+sky_top_color = Color(0.2, 0.4, 0.8, 1)
+sky_horizon_color = Color(0.54, 0.69, 0.81, 1)
+ground_bottom_color = Color(0.12, 0.12, 0.12, 1)
+ground_horizon_color = Color(0.54, 0.69, 0.81, 1)
 
 [sub_resource type="Sky" id="Sky_default"]
-sky_material = SubResource("PhysicalSkyMaterial_default")
+sky_material = SubResource("ProceduralSkyMaterial_default")
 
 [sub_resource type="Environment" id="Environment_default"]
 background_mode = 2
 sky = SubResource("Sky_default")
 tonemap_mode = 2
+glow_enabled = true
 
 [node name="TestScene" type="Node3D"]
 
@@ -52,9 +63,33 @@ shape = SubResource("BoxShape3D_floor")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
 mesh = SubResource("BoxMesh_floor")
 
-[node name="Grass" type="MultiMeshInstance3D" parent="Floor"]
+[node name="Grass" parent="Floor" instance=ExtResource("12_grass_scene")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-script = ExtResource("12_grass")
+[node name="Boundaries" type="Node3D" parent="."]
+
+[node name="WallEast" type="StaticBody3D" parent="Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 10, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boundaries/WallEast"]
+shape = SubResource("BoxShape3D_wall_ew")
+
+[node name="WallWest" type="StaticBody3D" parent="Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 10, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boundaries/WallWest"]
+shape = SubResource("BoxShape3D_wall_ew")
+
+[node name="WallNorth" type="StaticBody3D" parent="Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, -50)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boundaries/WallNorth"]
+shape = SubResource("BoxShape3D_wall_ns")
+
+[node name="WallSouth" type="StaticBody3D" parent="Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 50)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boundaries/WallSouth"]
+shape = SubResource("BoxShape3D_wall_ns")
 
 [node name="Obstacles" type="Node3D" parent="."]
 

@@ -26,6 +26,9 @@ public partial class IsometricCharacterController : CharacterBody3D
     [Export]
     public Timer DashCooldownTimer;
 
+    [Export]
+    public AudioStreamPlayer3D DashSoundPlayer;
+
     public override void _Ready()
     {
         if (DashTimer != null) DashTimer.WaitTime = DashDuration;
@@ -110,6 +113,11 @@ public partial class IsometricCharacterController : CharacterBody3D
                  var vfx = DashVFX.Instantiate<Node3D>();
                  vfx.Position = Position + Vector3.Down * 0.9f;
                  GetParent().AddChild(vfx);
+             }
+
+             if (DashSoundPlayer != null)
+             {
+                 DashSoundPlayer.Play();
              }
 
              // Dash in current facing direction or input direction

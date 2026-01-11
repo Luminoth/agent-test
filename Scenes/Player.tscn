@@ -10,11 +10,12 @@
 [sub_resource type="BoxMesh" id="BoxMesh_indicator"]
 size = Vector3(0.5, 0.5, 0.5)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("DashTimer", "DashCooldownTimer")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("DashTimer", "DashCooldownTimer", "DashSoundPlayer")]
 script = ExtResource("1_controller")
 DashVFX = ExtResource("2_vfx")
 DashTimer = NodePath("DashTimer")
 DashCooldownTimer = NodePath("DashCooldownTimer")
+DashSoundPlayer = NodePath("DashSoundPlayer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_player")
@@ -31,3 +32,6 @@ one_shot = true
 
 [node name="DashCooldownTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="DashSoundPlayer" type="AudioStreamPlayer3D" parent="."]
+bus = "SFX"

@@ -4,6 +4,9 @@
 [ext_resource type="Script" path="res://Scripts/Tests/TestIsometricMovement.cs" id="2_debugger"]
 [ext_resource type="Script" path="res://Scripts/IsometricCamera.cs" id="3_camera"]
 [ext_resource type="Script" path="res://Scripts/FPSCounter.cs" id="4_hud"]
+[ext_resource type="PackedScene" path="res://Scenes/Obstacle_SmallBox.tscn" id="5_box"]
+[ext_resource type="PackedScene" path="res://Scenes/Obstacle_WideWall.tscn" id="6_wall"]
+[ext_resource type="PackedScene" path="res://Scenes/Obstacle_TallPillar.tscn" id="7_pillar"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
 size = Vector3(100, 1, 100)
@@ -41,6 +44,23 @@ shape = SubResource("BoxShape3D_floor")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
 mesh = SubResource("BoxMesh_floor")
+
+[node name="Obstacles" type="Node3D" parent="."]
+
+[node name="Obstacle_SmallBox1" parent="Obstacles" instance=ExtResource("5_box")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 5)
+
+[node name="Obstacle_SmallBox2" parent="Obstacles" instance=ExtResource("5_box")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, -5)
+
+[node name="Obstacle_WideWall1" parent="Obstacles" instance=ExtResource("6_wall")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 8, 1, -8)
+
+[node name="Obstacle_TallPillar1" parent="Obstacles" instance=ExtResource("7_pillar")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2, 2)
+
+[node name="Obstacle_TallPillar2" parent="Obstacles" instance=ExtResource("7_pillar")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 8)
 
 [node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)

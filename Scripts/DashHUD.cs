@@ -29,7 +29,7 @@ public partial class DashHUD : Control
             double rechargeProgress = (1.0 - (timeLeft / totalTime)) * 100.0;
             AbilityIcon.Value = rechargeProgress;
 
-            AbilityIcon.Modulate = Colors.Gray;
+            // AbilityIcon.Modulate = Colors.Gray;
             _wasOnCooldown = true;
         }
         else
@@ -45,7 +45,7 @@ public partial class DashHUD : Control
             else
             {
                 // Ready State: White (Normal)
-                AbilityIcon.Modulate = AbilityIcon.Modulate.Lerp(Colors.White, (float)delta * 5.0f);
+                AbilityIcon.Modulate = AbilityIcon.Modulate.Lerp(Colors.White, (float)delta * 2.0f);
             }
         }
     }

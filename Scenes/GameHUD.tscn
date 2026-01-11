@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://Scripts/GameHUD.cs" id="1_gamehud"]
+[ext_resource type="Script" path="res://Scripts/DashHUD.cs" id="2_dashhud"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="3_icon"]
+[ext_resource type="Script" path="res://Scripts/FPSCounter.cs" id="4_fps"]
+
+[node name="HUD" type="CanvasLayer" groups=["HUD"] node_paths=PackedStringArray("DashHUDElement")]
+script = ExtResource("1_gamehud")
+DashHUDElement = NodePath("DashHUD")
+
+[node name="DashHUD" type="Control" parent="." node_paths=PackedStringArray("AbilityIcon")]
+layout_mode = 3
+anchor_left = 0.25
+anchor_top = 1.0
+anchor_right = 0.25
+anchor_bottom = 1.0
+grow_vertical = 0
+script = ExtResource("2_dashhud")
+AbilityIcon = NodePath("AbilityIcon")
+
+[node name="AbilityIcon" type="TextureProgressBar" parent="DashHUD"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -64.0
+offset_right = 32.0
+grow_horizontal = 2
+grow_vertical = 0
+value = 100.0
+fill_mode = 1
+texture_under = ExtResource("3_icon")
+texture_progress = ExtResource("3_icon")
+tint_under = Color(0.18, 0.18, 0.18, 1)
+
+[node name="FPSLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "FPS: 60"
+script = ExtResource("4_fps")

@@ -76,8 +76,8 @@ public partial class IsometricCharacterController : CharacterBody3D
             velocity.Y -= Gravity * (float)delta;
 
         // Handle Jump (Original Logic Preserved)
-        if (Input.IsActionJustPressed("jump") && IsOnFloor())
-            velocity.Y = JumpVelocity;
+        /*if (Input.IsActionJustPressed("jump") && IsOnFloor())
+            velocity.Y = JumpVelocity;*/
 
         // Handle Dash Input
         if (Input.IsActionJustPressed("dash") && IsOnFloor() && !_isDashing && DashCooldownTimer.IsStopped())

@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" path="res://Scenes/Obstacle_RoundPillar.tscn" id="8_round"]
 [ext_resource type="PackedScene" path="res://Scenes/Obstacle_LargeBlock.tscn" id="9_block"]
 [ext_resource type="PackedScene" path="res://Scenes/Player.tscn" id="10_player"]
+[ext_resource type="Script" path="res://Scripts/GrassGenerator.cs" id="12_grass"]
 [ext_resource type="Texture2D" path="res://icon.svg" id="11_icon"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
@@ -49,6 +50,10 @@ shape = SubResource("BoxShape3D_floor")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
 mesh = SubResource("BoxMesh_floor")
+
+[node name="Grass" type="MultiMeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+script = ExtResource("12_grass")
 
 [node name="Obstacles" type="Node3D" parent="."]
 

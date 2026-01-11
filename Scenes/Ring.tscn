@@ -7,8 +7,8 @@
 top_radius = 10.0
 bottom_radius = 10.0
 height = 100.0
-cap_top = true
-cap_bottom = true
+cap_top = false
+cap_bottom = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ring"]
 render_priority = 0

@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Ring.cs" id="1_ring"]
+[ext_resource type="Shader" path="res://Shaders/RingMaterial.gdshader" id="2_shader"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ring"]
+top_radius = 10.0
+bottom_radius = 10.0
+height = 100.0
+cap_top = true
+cap_bottom = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ring"]
+render_priority = 0
+shader = ExtResource("2_shader")
+shader_parameter/ring_color = Color(1, 0.27, 0, 0.5)
+shader_parameter/speed = 0.5
+shader_parameter/frequency = 5.0
+
+[node name="Ring" type="Node3D" node_paths=PackedStringArray("DamageOverlay")]
+script = ExtResource("1_ring")
+DamageOverlay = NodePath("RingUI/DamageOverlay")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+mesh = SubResource("CylinderMesh_ring")
+surface_material_override/0 = SubResource("ShaderMaterial_ring")
+
+[node name="RingUI" type="CanvasLayer" parent="."]
+
+[node name="DamageOverlay" type="ColorRect" parent="RingUI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0, 0, 0)

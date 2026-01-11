@@ -33,6 +33,7 @@ public partial class IsometricCharacterController : CharacterBody3D
         SceneTree tree = GetTree();
         if (tree != null)
         {
+            // Connect to HUD
             var hudNodes = tree.GetNodesInGroup("HUD");
             if (hudNodes.Count > 0)
             {
@@ -40,6 +41,17 @@ public partial class IsometricCharacterController : CharacterBody3D
                 if (hud != null)
                 {
                     hud.ConnectPlayer(this);
+                }
+            }
+
+            // Connect to Ring
+            var ringNodes = tree.GetNodesInGroup("Ring");
+            if (ringNodes.Count > 0)
+            {
+                var ring = ringNodes[0] as Ring;
+                if (ring != null)
+                {
+                    ring.RegisterPlayer(this);
                 }
             }
         }

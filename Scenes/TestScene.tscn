@@ -4,12 +4,15 @@
 [ext_resource type="Script" path="res://Scripts/Tests/TestIsometricMovement.cs" id="2_debugger"]
 [ext_resource type="Script" path="res://Scripts/IsometricCamera.cs" id="3_camera"]
 [ext_resource type="Script" path="res://Scripts/FPSCounter.cs" id="4_hud"]
+[ext_resource type="Script" path="res://Scripts/GameHUD.cs" id="5_gamehud"]
+[ext_resource type="Script" path="res://Scripts/DashHUD.cs" id="6_dashhud"]
 [ext_resource type="PackedScene" path="res://Scenes/Obstacle_SmallBox.tscn" id="5_box"]
 [ext_resource type="PackedScene" path="res://Scenes/Obstacle_WideWall.tscn" id="6_wall"]
 [ext_resource type="PackedScene" path="res://Scenes/Obstacle_TallPillar.tscn" id="7_pillar"]
 [ext_resource type="PackedScene" path="res://Scenes/Obstacle_RoundPillar.tscn" id="8_round"]
 [ext_resource type="PackedScene" path="res://Scenes/Obstacle_LargeBlock.tscn" id="9_block"]
 [ext_resource type="PackedScene" path="res://Scenes/Player.tscn" id="10_player"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="11_icon"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
 size = Vector3(100, 1, 100)
@@ -116,7 +119,35 @@ shadow_enabled = true
 script = ExtResource("2_debugger")
 Character = NodePath("../Player")
 
-[node name="HUD" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="." groups=["HUD"] node_paths=PackedStringArray("DashHUDElement")]
+script = ExtResource("5_gamehud")
+DashHUDElement = NodePath("DashHUD")
+
+[node name="DashHUD" type="Control" parent="HUD" node_paths=PackedStringArray("AbilityIcon")]
+layout_mode = 3
+anchor_left = 0.25
+anchor_top = 1.0
+anchor_right = 0.25
+anchor_bottom = 1.0
+grow_vertical = 0
+script = ExtResource("6_dashhud")
+AbilityIcon = NodePath("AbilityIcon")
+
+[node name="AbilityIcon" type="TextureProgressBar" parent="HUD/DashHUD"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -64.0
+offset_right = 32.0
+grow_horizontal = 2
+grow_vertical = 0
+value = 100.0
+fill_mode = 4
+texture_progress = ExtResource("11_icon")
 
 [node name="FPSLabel" type="Label" parent="HUD"]
 offset_right = 40.0

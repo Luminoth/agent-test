@@ -11,7 +11,7 @@ public partial class IsometricCharacterController : CharacterBody3D
     [Export]
     public float DashDuration = 0.2f;
     [Export]
-    public float DashCooldown = 1.0f;
+    public float DashCooldown = 3.0f;
 
     // Get the gravity from the project settings to be synced with RigidBody nodes.
     public float Gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
@@ -27,6 +27,22 @@ public partial class IsometricCharacterController : CharacterBody3D
     {
         if (DashTimer != null) DashTimer.WaitTime = DashDuration;
         if (DashCooldownTimer != null) DashCooldownTimer.WaitTime = DashCooldown;
+
+        // Connect to HUD
+        // We find the first node in the "HUD" group and interact with it.
+        SceneTree tree = GetTree();
+        if (tree != null)
+        {
+            var hudNodes = tree.GetNodesInGroup("HUD");
+            if (hudNodes.Count > 0)
+            {
+                var hud = hudNodes[0] as GameHUD;
+                if (hud != null)
+                {
+                    hud.ConnectPlayer(this);
+                }
+            }
+        }
     }
 
     public override void _PhysicsProcess(double delta)

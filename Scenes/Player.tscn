@@ -9,8 +9,10 @@
 [sub_resource type="BoxMesh" id="BoxMesh_indicator"]
 size = Vector3(0.5, 0.5, 0.5)
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("DashTimer", "DashCooldownTimer")]
 script = ExtResource("1_controller")
+DashTimer = NodePath("DashTimer")
+DashCooldownTimer = NodePath("DashCooldownTimer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_player")
@@ -21,3 +23,9 @@ mesh = SubResource("CapsuleMesh_player")
 [node name="FacingIndicator" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.6)
 mesh = SubResource("BoxMesh_indicator")
+
+[node name="DashTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="DashCooldownTimer" type="Timer" parent="."]
+one_shot = true

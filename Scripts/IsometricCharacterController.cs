@@ -17,25 +17,34 @@ public partial class IsometricCharacterController : CharacterBody3D
     public float Gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 
     private bool _isDashing = false;
-    private float _dashTimer = 0.0f;
-    private float _dashCooldownTimer = 0.0f;
+
+    [Export]
+    public Timer DashTimer;
+    [Export]
+    public Timer DashCooldownTimer;
+
+    public override void _Ready()
+    {
+        if (DashTimer != null) DashTimer.WaitTime = DashDuration;
+        if (DashCooldownTimer != null) DashCooldownTimer.WaitTime = DashCooldown;
+    }
 
     public override void _PhysicsProcess(double delta)
     {
         Vector3 velocity = Velocity;
 
-        if (_dashCooldownTimer > 0)
-            _dashCooldownTimer -= (float)delta;
-
-        // Handle Dash Timer
+        // Handle Dash Logic
         if (_isDashing)
         {
-            _dashTimer -= (float)delta;
-            if (_dashTimer <= 0)
+            if (DashTimer.IsStopped())
             {
+                // Dash just finished
                 _isDashing = false;
                 velocity.X = 0; // Optional: Stop momentarily after dash
                 velocity.Z = 0;
+
+                // Start Cooldown exactly when dash ends
+                DashCooldownTimer.Start();
             }
             else
             {
@@ -55,11 +64,14 @@ public partial class IsometricCharacterController : CharacterBody3D
             velocity.Y = JumpVelocity;
 
         // Handle Dash Input
-        if (Input.IsActionJustPressed("dash") && IsOnFloor() && !_isDashing && _dashCooldownTimer <= 0)
+        if (Input.IsActionJustPressed("dash") && IsOnFloor() && !_isDashing && DashCooldownTimer.IsStopped())
         {
              _isDashing = true;
-             _dashTimer = DashDuration;
-             _dashCooldownTimer = DashCooldown;
+             // Ensure WaitTimes are up to date if changed in runtime (optional)
+             if (DashTimer != null) DashTimer.WaitTime = DashDuration;
+             if (DashCooldownTimer != null) DashCooldownTimer.WaitTime = DashCooldown;
+
+             if (DashTimer != null) DashTimer.Start();
 
              // Dash in current facing direction or input direction
              Vector2 dashInputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_back");

@@ -1,6 +1,7 @@
 [gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://Scripts/IsometricCharacterController.cs" id="1_controller"]
+[ext_resource type="PackedScene" path="res://Scenes/VFX_DashDust.tscn" id="2_vfx"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 
@@ -11,6 +12,7 @@ size = Vector3(0.5, 0.5, 0.5)
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("DashTimer", "DashCooldownTimer")]
 script = ExtResource("1_controller")
+DashVFX = ExtResource("2_vfx")
 DashTimer = NodePath("DashTimer")
 DashCooldownTimer = NodePath("DashCooldownTimer")
 

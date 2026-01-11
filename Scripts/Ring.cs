@@ -3,7 +3,7 @@ using Godot;
 public partial class Ring : Node3D
 {
     [Export]
-    public float Radius = 10.0f;
+    public float Radius = 25.0f;
 
     [Export]
     public ColorRect DamageOverlay;

@@ -4,8 +4,8 @@
 [ext_resource type="Shader" path="res://Shaders/RingMaterial.gdshader" id="2_shader"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_ring"]
-top_radius = 10.0
-bottom_radius = 10.0
+top_radius = 25.0
+bottom_radius = 25.0
 height = 100.0
 cap_top = false
 cap_bottom = false

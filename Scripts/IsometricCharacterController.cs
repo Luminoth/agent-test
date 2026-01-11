@@ -13,6 +13,9 @@ public partial class IsometricCharacterController : CharacterBody3D
     [Export]
     public float DashCooldown = 3.0f;
 
+    [Export]
+    public PackedScene DashVFX;
+
     // Get the gravity from the project settings to be synced with RigidBody nodes.
     public float Gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 
@@ -100,6 +103,14 @@ public partial class IsometricCharacterController : CharacterBody3D
              if (DashCooldownTimer != null) DashCooldownTimer.WaitTime = DashCooldown;
 
              if (DashTimer != null) DashTimer.Start();
+
+             // Spawn VFX
+             if (DashVFX != null)
+             {
+                 var vfx = DashVFX.Instantiate<Node3D>();
+                 vfx.Position = Position + Vector3.Down * 0.9f;
+                 GetParent().AddChild(vfx);
+             }
 
              // Dash in current facing direction or input direction
              Vector2 dashInputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_back");

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Ring.cs" id="1_ring"]
 [ext_resource type="Shader" path="res://Shaders/RingMaterial.gdshader" id="2_shader"]
+[ext_resource type="Material" path="res://Scenes/RingSimple.tres" id="3_simple_mat"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_ring"]
 top_radius = 25.0

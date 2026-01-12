@@ -16,6 +16,8 @@ public partial class GrassGenerator : MultiMeshInstance3D
 
     public override void _Ready()
     {
+        CastShadow = GeometryInstance3D.ShadowCastingSetting.Off;
+
         if (BladeMesh == null)
         {
             GD.PrintErr("GrassGenerator: BladeMesh is missing!");

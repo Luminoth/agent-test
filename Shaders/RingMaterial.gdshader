@@ -37,10 +37,6 @@ void fragment() {
 
     // Intersection Highlight
     float depth_tex = texture(depth_texture, SCREEN_UV).r;
-
-    // NOTE: In Godot 4, the depth texture is raw. Reconstruction depends on Projection type.
-    // For Perspective (which we are using now), standard reconstruction works.
-
     vec4 world_pos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV * 2.0 - 1.0, depth_tex, 1.0);
     world_pos.xyz /= world_pos.w;
     float linear_depth = -world_pos.z;
@@ -48,18 +44,11 @@ void fragment() {
 
     float diff = linear_depth - vertex_depth;
 
-    // Strict Clamping: Only glow if scene is BEHIND the ring (diff > 0)
-    // If diff < 0, it means the scene is in front (or self-z-fighting), so NO glow.
     float intersection = 0.0;
     if (diff > 0.0) {
         intersection = 1.0 - smoothstep(0.0, intersection_width, diff);
     }
 
-    // Add UV Ground Glow - REMOVED to rely on pure intersection consistency
-    // float ground_glow = smoothstep(0.1, 0.0, UV.y) * 3.0;
-
-    // Mix intersection color on top (Additive or Mix)
-    // Using simple addition for glow boost
     final_color += (intersection_color.rgb * intersection * 4.0);
     final_alpha += intersection;
 

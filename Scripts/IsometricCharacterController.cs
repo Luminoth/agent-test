@@ -29,6 +29,9 @@ public partial class IsometricCharacterController : CharacterBody3D
     [Export]
     public AudioStreamPlayer3D DashSoundPlayer;
 
+    [Export]
+    public AnimationPlayer DashAnimationPlayer;
+
     public override void _Ready()
     {
         if (DashTimer != null) DashTimer.WaitTime = DashDuration;
@@ -108,16 +111,15 @@ public partial class IsometricCharacterController : CharacterBody3D
              if (DashTimer != null) DashTimer.Start();
 
              // Spawn VFX
-             if (DashVFX != null)
+             // Trigger Animation
+             if (DashAnimationPlayer != null && DashAnimationPlayer.HasAnimation("Dash"))
              {
-                 var vfx = DashVFX.Instantiate<Node3D>();
-                 vfx.Position = Position + Vector3.Down * 0.9f;
-                 GetParent().AddChild(vfx);
+                 DashAnimationPlayer.Play("Dash");
              }
-
-             if (DashSoundPlayer != null)
+             else
              {
-                 DashSoundPlayer.Play();
+                 SpawnDashVFX();
+                 PlayDashSound();
              }
 
              // Dash in current facing direction or input direction
@@ -169,5 +171,22 @@ public partial class IsometricCharacterController : CharacterBody3D
 
         Velocity = velocity;
         MoveAndSlide();
+    }
+    public void SpawnDashVFX()
+    {
+        if (DashVFX != null)
+        {
+            var vfx = DashVFX.Instantiate<Node3D>();
+            vfx.Position = Position + Vector3.Down * 0.9f;
+            GetParent().AddChild(vfx);
+        }
+    }
+
+    public void PlayDashSound()
+    {
+        if (DashSoundPlayer != null)
+        {
+            DashSoundPlayer.Play();
+        }
     }
 }
